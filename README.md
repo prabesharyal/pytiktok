@@ -1,6 +1,8 @@
 # pytiktok
 A repository of self made tiktok tools written in Python Selenium. 
 
+# This repository is depriciated, Needs a workaround. I'm abit learning new languages, so, I guess, this won't be that soon. You can commit if you want.
+
 # Tiktok-VideoData-Scraper: 
 >- Scrapes through a single video link and gets almost all top level comments (not replies).
 >- Gets basic video Info including caption, music used, music link, Likes, Shares and Comments count.
