@@ -1,6 +1,6 @@
 import time
 import re
-import os
+import os,sys
 
 
 import yt_dlp
@@ -15,6 +15,7 @@ from itertools import cycle
 from shutil import get_terminal_size
 from threading import Thread
 from time import sleep
+
 
 #Loader animation
 class Loader:
@@ -64,7 +65,7 @@ class Loader:
 options = webdriver.ChromeOptions()
 options.add_argument("--start-maximized")
 options.add_argument("--disable-notifications")
-options.add_argument('headless')
+# options.add_argument('headless')
 options.add_argument('--log-level=3')
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
@@ -98,12 +99,19 @@ def scroll_down():
 
     # Get scroll height.
     last_height = driver.execute_script("return document.body.scrollHeight")
+    while driver.find_elements(by=By.CLASS_NAME,value='captcha-disable-scroll'):
+        print("\n")
+        print("Solve Captcha!")
+        time.sleep(30)
 
     while True:
-
+        while driver.find_elements(by=By.CLASS_NAME,value='captcha-disable-scroll'):
+            print("\n")
+            print("Solve Captcha!")
+            time.sleep(30)
         # Scroll down to the bottom.
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-
+        
         # Wait to load the page.
         time.sleep(2)
 
@@ -116,13 +124,14 @@ def scroll_down():
 
         last_height = new_height
 
+
 with Loader("Looking for all videos of user: {}  ".format(username),"Loading all videos completed!"):
     scroll_down()
 
 #Finding all videos
 with Loader("Extracting Video Links ", "All video links extraction completed succesfully !"):
-
-    videos = driver.find_elements(by=By.XPATH,value='//*[@id="app"]/div[2]/div[2]/div/div[2]/div[2]/div//a[@href]')
+# //*[@id="app"]/div[2]/div[2]/div/div[2]/div[2]/div//a[@href]
+    videos = driver.find_elements(by=By.XPATH,value='//*[@id="main-content-others_homepage"]/div/div[2]/div[2]/div//a[@href]')
     URLS = list()
     #print("\n\nGetting all video links ....")
     c=0
@@ -154,7 +163,8 @@ def yt_dlp_tiktok_dl(URLS,username,c):
             quit()
         except BaseException:
             print("Skipping video {}/{}: >>>>> {} <<<<".format(str(i),str(c), videolinks)+"Some ERROR Occurred")
-        i += 1 
+        i += 1
+         
     print("\n\n")
     print("%50s"%"Downloaded All {} Videos!".format(str(c)))
     print("\n\n")
