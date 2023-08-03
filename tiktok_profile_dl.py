@@ -73,7 +73,7 @@ options.add_experimental_option('excludeSwitches', ['enable-logging'])
 #Browser Files
 #os.system('cls' if os.name == 'nt' else 'clear')
 
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options, service_args=['CREATE_NO_WINDOW'])
+driver = webdriver.Chrome()
 
 #Loading Page For First Time
 #os.system('cls' if os.name == 'nt' else 'clear')
